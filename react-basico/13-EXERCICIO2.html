@@ -31,29 +31,11 @@
 
       Este exercício contará para a nota de Participação e Assiduidade (PA).
     */
-
-    const DolarFmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
-
-    // Formatação para reais
-    const RealFmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
     
     function Form() {
 
-      const valReaisRef = React.useRef()
-      const cotDolarRef = React.useRef()
-      const resultadoRef = React.useRef()
-
-      let valReais, cotDolar
-
-      function handleChange(event) {
-        valReais = Number(valReaisRef.current.value)
-        cotDolar = Number(cotDolarRef.current.value)
-        
-        let convertido = valReais / cotDolar
-
-        resultadoRef.current.textContent = DolarFmt.format(convertido)
-
-      }
+      const [valReais, setValReais] = React.useState('')
+      const [cotDolar, setCotDolar] = React.useState('')
 
       return (
         <>
@@ -62,16 +44,26 @@
             <div>
               <label>
                 <span>Valor em reais</span><br/>
-                <input ref={valReaisRef} onChange={handleChange} type="number" />
+                <input
+                  type="number" 
+                  onChange={event => setValReais(Number(event.target.value))} 
+                  value={valReais}
+                />
               </label>
             </div>
             <div>
               <label>
                 <span>Cotação do dólar</span><br/>
-                <input ref={cotDolarRef} onChange={handleChange} type="number" />
+                <input
+                  type="number" 
+                  onChange={event => setCotDolar(Number(event.target.value))} 
+                  value={cotDolar}
+                />
               </label>
             </div>
-            <div ref={resultadoRef}></div>
+            <div>
+              {(valReais / cotDolar).toLocaleString('en-US', { style: 'currency', currency: 'USD'})}
+            </div>
           </form>
         </>
       )
