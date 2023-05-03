@@ -6,7 +6,9 @@ import Exercicio02 from './exercicios/02'
 import Exercicio03 from './exercicios/03'
 import Exercicio04 from './exercicios/04'
 import Exercicio05 from './exercicios/05'
+import Exercicio06 from './exercicios/06'
 import Home from './pages/Home'
+
 
 function App() {
 
@@ -29,8 +31,8 @@ function App() {
           <Route path="/02" element={<Exercicio02 />} />
           <Route path="/03" element={<Exercicio03 />} />
           <Route path="/04" element={<Exercicio04 />} />
-          <Route path="/05" element={<Exercicio05 />}/>
-          <Route path="/06" />
+          <Route path="/05" element={<Exercicio05 />} />
+          <Route path="/06" element={<Exercicio06 />} />
         </Routes>
       </BrowserRouter>
     </div>
