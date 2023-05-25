@@ -1,7 +1,11 @@
 import React from 'react'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { DataGrid } from '@mui/x-data-grid';
+import { format } from 'date-fns'
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButtom from '@mui/material/IconButton'
 
 export default function CustomersList() {
 
@@ -36,34 +40,76 @@ export default function CustomersList() {
     }
   }
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { 
+      field: 'id',
+      headerName: 'ID',
+      width: 90
+    },
     {
-      field: 'firstName',
-      headerName: 'First name',
+      field: 'name',
+      headerName: 'Nome',
+      width: 300,
+    },
+    {
+      field: 'ident_document',
+      headerName: 'CPF',
+      align: 'center',
+      headerAlign: 'center',
       width: 150,
-      editable: true,
     },
     {
-      field: 'lastName',
-      headerName: 'Last name',
+      field: 'birth_date',
+      headerName: 'Data nasc',
+      align: 'center',
+      headerAlign: 'center',
+      width: 100,
+      valueFormatter: params => {
+        if(params.value) return format(new Date(params.value), 'dd/MM/yyyy')
+        else return 
+      }
+    },
+    {
+      field: 'city',
+      headerName: 'Município/UF',
+      align: 'center',
+      headerAlign: 'center',
+      width: 300,
+      // Colocando dois campos na mesma célula -> valueGetter
+      valueGetter: params => params.row.city + ' - ' + params.row.uf
+    },
+    {
+      field: 'phone',
+      headerName: 'Celular',
+      align: 'center',
+      headerAlign: 'center',
       width: 150,
-      editable: true,
     },
     {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
-      editable: true,
+      field: 'email',
+      headerName: 'E-mail',
+      width: 200,
     },
     {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+      field: 'edit',
+      headerName: 'Editar',
+      headerAling: 'center',
+      align: 'center',
+      width: 90,
+      renderCell: params => 
+        <IconButtom aria-label='Editar'>
+          <EditIcon/>
+        </IconButtom>
+    },
+    {
+      field: 'delete',
+      headerName: 'Excluir',
+      headerAling: 'center',
+      align: 'center',
+      width: 90,
+      renderCell: params => 
+      <IconButtom aria-label='Excluir'>
+        <DeleteForeverIcon color='error'/>
+      </IconButtom>
     },
   ];
   
@@ -83,13 +129,13 @@ export default function CustomersList() {
   return (
 
     <>
-      <Typography variant="h1">
+      <Typography variant="h1" sx={{mb: '50px'}}>
         Listagem de clientes
       </Typography>
 
-      <Box sx={{ height: 400, width: '100%' }}>
+      <Paper elevation={4} sx={{ height: 400, width: '100%' }}>
         <DataGrid
-          rows={rows}
+          rows={customers}
           columns={columns}
           initialState={{
             pagination: {
@@ -102,11 +148,7 @@ export default function CustomersList() {
           checkboxSelection
           disableRowSelectionOnClick
         />
-      </Box>
-
-      <div>
-        {JSON.stringify(customers)}
-      </div>
+      </Paper>
     </>
   )
 }
