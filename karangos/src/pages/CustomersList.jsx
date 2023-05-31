@@ -1,3 +1,11 @@
+/*
+MÉTODOS HTTP
+GET -> serve para buscar no back-end
+DELETE -> instruir o back-end e excluir uma informação 
+POST -> cria uma nova informação no back-end
+PUT -> instruir o back-end e modificar uma informação
+*/
+
 import React from 'react'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper';
@@ -6,6 +14,10 @@ import { format } from 'date-fns'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButtom from '@mui/material/IconButton'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import { Link } from 'react-router-dom'
 
 export default function CustomersList() {
 
@@ -95,10 +107,12 @@ export default function CustomersList() {
       headerAling: 'center',
       align: 'center',
       width: 90,
-      renderCell: params => 
-        <IconButtom aria-label='Editar'>
-          <EditIcon/>
-        </IconButtom>
+      renderCell: params =>
+        <Link to={'./' + params.id}> 
+          <IconButtom aria-label='Editar'>
+            <EditIcon/>
+          </IconButtom>
+        </Link>
     },
     {
       field: 'delete',
@@ -107,7 +121,10 @@ export default function CustomersList() {
       align: 'center',
       width: 90,
       renderCell: params => 
-      <IconButtom aria-label='Excluir'>
+      <IconButtom 
+        aria-label='Excluir'
+        onClick={() => handleDeleteButtonClick(params.id)}
+        >
         <DeleteForeverIcon color='error'/>
       </IconButtom>
     },
@@ -125,6 +142,22 @@ export default function CustomersList() {
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
   ];
   
+  async function handleDeleteButtonClick(id){
+    if(confirm('Deseja realmente excluir este item?')) {
+      try {
+        // Faz chamada do back-end para excluir o cliente
+        const result = await fetch(`https://api.faustocintra.com.br/customers/${id}`, {
+          method: 'DELETE'
+        })
+        // Se a exclusão tiver sido feita com sucesso, atualiza a listagem
+        if(result.ok) loadData()
+        alert('Exclusão efetuada com sucesso')
+      }
+      catch(error) {
+        console.error(error)
+      }
+    }
+  }
 
   return (
 
@@ -132,7 +165,23 @@ export default function CustomersList() {
       <Typography variant="h1" sx={{mb: '50px'}}>
         Listagem de clientes
       </Typography>
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'right',
+        mb: '25px' // margin-bottom
 
+      }}>
+        <Link to="new">
+          <Button 
+            variant="contained" 
+            color="secondary"
+            size="large"
+            startIcon={<AddBoxIcon />}
+            >
+              Cadastrar novo cliente
+          </Button>
+        </Link>
+      </Box>
       <Paper elevation={4} sx={{ height: 400, width: '100%' }}>
         <DataGrid
           rows={customers}

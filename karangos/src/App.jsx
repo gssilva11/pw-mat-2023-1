@@ -1,3 +1,4 @@
+import './App.css'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -12,6 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import Homepage from './pages/Homepage';
 import CustomersList from './pages/CustomersList';
+import CustomersForm from './pages/CustomersForm'
 
 function App() {
 
@@ -31,10 +33,9 @@ function App() {
             }}>
               <Routes>
                 <Route path='/' element={<Homepage/>} />
-              </Routes>
-
-              <Routes>
                 <Route path='/customers' element={<CustomersList/>} />
+                <Route path='/customers/new' element={<CustomersForm/>} />
+                <Route path='/customers/:id' element={<CustomersForm/>} />
               </Routes>
             </Box>
             <FooterBar/>
