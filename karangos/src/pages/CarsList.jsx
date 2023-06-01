@@ -1,11 +1,3 @@
-/*
-MÉTODOS HTTP
-GET -> serve para buscar no back-end
-DELETE -> instruir o back-end e excluir uma informação 
-POST -> cria uma nova informação no back-end
-PUT -> instruir o back-end e modificar uma informação
-*/
-
 import React from 'react'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper';
@@ -19,16 +11,18 @@ import Button from '@mui/material/Button';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Link } from 'react-router-dom'
 
-export default function CustomersList() {
-
+//
+export default function CarsList() {
+//
   const [state, setState] = React.useState({
-    customers: {}
+    cars: {}
 
   })
 
   // Desestruturando as variáveis de estado
+  //
   const {
-    customers
+    cars
   } = state
 
   // Este useEffect() será executado apenas uma vez, durante o
@@ -39,10 +33,12 @@ export default function CustomersList() {
 
   async function loadData() {   // async =  quando acontece algo de fora da aplicação
     try {
-      const result = await fetch('https://api.faustocintra.com.br/customers')
+      //
+      const result = await fetch('https://api.faustocintra.com.br/cars')
 
       // Requisição OK
-      if(result.ok) setState({...state, customers: await result.json()})
+      //
+      if(result.ok) setState({...state, cars: await result.json()})
       // Requisição com erro
       else throw new Error(`[HTTP ${result.status}] ${result.statusText}`)
     }
@@ -51,60 +47,66 @@ export default function CustomersList() {
       console.error(error)
     }
   }
+  //
   const columns = [
     { 
       field: 'id',
       headerName: 'ID',
       width: 90
     },
-    {
-      field: 'name',
-      headerName: 'Nome',
-      width: 300,
+    { 
+      field: 'brand',
+      headerName: 'MARCA',
+      width: 150
     },
     {
-      field: 'ident_document',
-      headerName: 'CPF',
-      align: 'center',
-      headerAlign: 'center',
-      width: 150,
+      field: 'model',
+      headerName: 'MODELO',
+      width: 130,
     },
     {
-      field: 'birth_date',
-      headerName: 'Data nasc',
-      align: 'center',
-      headerAlign: 'center',
+      field: 'color',
+      headerName: 'COR',
       width: 100,
+    },
+    {
+      field: 'year_manufacture',
+      headerName: 'ANO DE FABRICAÇÃO',
+      width: 170,
       valueFormatter: params => {
         if(params.value) return format(new Date(params.value), 'dd/MM/yyyy')
         else return 
       }
     },
     {
-      field: 'city',
-      headerName: 'Município/UF',
-      align: 'center',
-      headerAlign: 'center',
-      width: 300,
-      // Colocando dois campos na mesma célula -> valueGetter
-      valueGetter: params => params.row.city + ' - ' + params.row.uf
+      field: 'imported',
+      headerName: 'IMPORTADO',
+      width: 130,
+      //
+      valueFormatter: params => {
+        if(params.value === "1") return 'SIM'
+        else return 'NÃO'
+      }
     },
     {
-      field: 'phone',
-      headerName: 'Celular',
-      align: 'center',
-      headerAlign: 'center',
+      field: 'plates',
+      headerName: 'PLACA',
+      width: 100,
+    },
+    {
+      field: 'selling_price',
+      headerName: 'PREÇO DE VENDA',
       width: 150,
-    },
-    {
-      field: 'email',
-      headerName: 'E-mail',
-      width: 200,
+      //
+      valueFormatter: params => {
+        if (params.value) return 'R$ ' + params.value
+        else return ''
+      }
     },
     {
       field: 'edit',
       headerName: 'Editar',
-      headerAling: 'center',
+      headerAlign: 'center',
       align: 'center',
       width: 90,
       renderCell: params =>
@@ -117,7 +119,7 @@ export default function CustomersList() {
     {
       field: 'delete',
       headerName: 'Excluir',
-      headerAling: 'center',
+      headerAlign: 'center',
       align: 'center',
       width: 90,
       renderCell: params => 
@@ -130,23 +132,12 @@ export default function CustomersList() {
     },
   ];
   
-  // const rows = [
-  //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  //   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  //   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  //   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  //   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  //   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  //   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  // ];
-  
   async function handleDeleteButtonClick(id){
     if(confirm('Deseja realmente excluir este item?')) {
       try {
         // Faz chamada do back-end para excluir o cliente
-        const result = await fetch(`https://api.faustocintra.com.br/customers/${id}`, {
+        //
+        const result = await fetch(`https://api.faustocintra.com.br/cars/${id}`, {
           method: 'DELETE'
         })
         // Se a exclusão tiver sido feita com sucesso, atualiza a listagem
@@ -162,8 +153,9 @@ export default function CustomersList() {
   return (
 
     <>
+      //
       <Typography variant="h1" sx={{mb: '50px'}}>
-        Listagem de clientes
+        Listagem de carros
       </Typography>
       <Box sx={{
         display: 'flex',
@@ -171,6 +163,7 @@ export default function CustomersList() {
         mb: '25px' // margin-bottom
 
       }}>
+        //
         <Link to="new">
           <Button 
             variant="contained" 
@@ -178,13 +171,14 @@ export default function CustomersList() {
             size="large"
             startIcon={<AddBoxIcon />}
             >
-              Cadastrar novo cliente
+              Cadastrar novo carro
           </Button>
         </Link>
       </Box>
       <Paper elevation={4} sx={{ height: 400, width: '100%' }}>
         <DataGrid
-          rows={customers}
+          //
+          rows={cars}
           columns={columns}
           initialState={{
             pagination: {
