@@ -15,7 +15,7 @@ import Homepage from './pages/Homepage';
 import CustomersList from './pages/CustomersList';
 import CustomersForm from './pages/CustomersForm'
 
-//
+// Foi realizada a importação de CarsList e de CarsForm
 import CarsList from './pages/CarsList';
 import CarsForm from './pages/CarsForm'
 
@@ -41,7 +41,8 @@ function App() {
                 <Route path='/customers/new' element={<CustomersForm/>} />
                 <Route path='/customers/:id' element={<CustomersForm/>} />
 
-                //
+                {/* Foram criadas três novas rotas para que as novas funcionalidades
+                sejam atribuidas ao site */}
                 <Route path='/cars' element={<CarsList/>} />
                 <Route path='/cars/new' element={<CarsForm/>} />
                 <Route path='/cars/:id' element={<CarsForm/>} />

@@ -55,7 +55,9 @@ export default function MainMenu() {
           Clientes
         </MenuItem>
 
-        //
+        {/* Foi adicionado mais um caminho no nosso menu 'hamburguer'
+        onde foi passada a rota '/cars'. Esse no menu essa rotas
+        foi chamada de 'Carros' */}
         <MenuItem
           onClick={handleClose}
           component={Link}
