@@ -19,6 +19,9 @@ import CustomersForm from './pages/CustomersForm'
 import CarsList from './pages/CarsList';
 import CarsForm from './pages/CarsForm'
 
+// Autor
+import Author from './pages/Author';
+
 function App() {
 
   return (
@@ -46,6 +49,10 @@ function App() {
                 <Route path='/cars' element={<CarsList/>} />
                 <Route path='/cars/new' element={<CarsForm/>} />
                 <Route path='/cars/:id' element={<CarsForm/>} />
+
+                // Autor
+                <Route path='/author' element={<Author/>} />
+
               </Routes>
             </Box>
             <FooterBar/>

@@ -50,20 +50,28 @@ export default function MainMenu() {
         <MenuItem divider
           onClick={handleClose}
           component={Link}
-          to="/customers"
+          to="/author"
         >
-          Clientes
+          Autor
         </MenuItem>
 
         {/* Foi adicionado mais um caminho no nosso menu 'hamburguer'
         onde foi passada a rota '/cars'. Esse no menu essa rotas
         foi chamada de 'Carros' */}
-        <MenuItem
+        <MenuItem divider
           onClick={handleClose}
           component={Link}
           to="/cars"
         >
           Carros
+        </MenuItem>
+
+        <MenuItem divider
+          onClick={handleClose}
+          component={Link}
+          to="/customers"
+        >
+          Clientes
         </MenuItem>
 
       </Menu>
