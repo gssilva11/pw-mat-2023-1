@@ -18,7 +18,7 @@ export default function Author() {
   const [likes, setLikes] = React.useState(0)
 
   function like() {
-    return setLikes(1)
+    return setLikes(likes+1)
   }
 
   useEffect(()=>{
